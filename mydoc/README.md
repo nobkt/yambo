@@ -47,4 +47,50 @@ This comprehensive technical document provides a rigorous mathematical framework
 
 ---
 
+### BSE Calculation with Coupling Terms and Full Band Coverage
+**Files**: 
+- `bse_full_bands_coupling_specification.md` - Detailed specification
+- `bse_full_bands_coupling_design.md` - Detailed design and implementation
+
+**BSE結合項を含む全バンド計算の詳細仕様書および詳細設計書**
+
+These documents extend the memory-efficient BSE algorithms to handle the coupling mode (BSEmod="coupling"), where both resonant and anti-resonant (coupling) terms are included in the BSE Hamiltonian, while considering all bands.
+
+**Key Features:**
+- Complete mathematical formulation for coupling Hamiltonian
+- Pseudo-Hermitian biorthogonal Lanczos method
+- On-the-fly kernel construction for both resonant and coupling blocks
+- Memory-efficient implementation maintaining rigorous mathematical treatment
+- No heuristic approximations or fallback methods
+- Detailed implementation algorithms with pseudocode and Fortran examples
+
+**Sections (Specification):**
+1. Mathematical formulation of coupling BSE Hamiltonian
+2. Memory bottleneck analysis (coupling vs. resonant-only)
+3. On-the-fly kernel construction strategy
+4. Modified Haydock method for pseudo-Hermitian systems
+5. Biorthogonal Lanczos iteration
+6. Symmetry exploitation (time-reversal, spatial, pseudo-Hermitian)
+7. Numerical stability and convergence
+8. Performance metrics and benchmarks
+9. Validation and quality assurance
+10. Parameter recommendations
+
+**Sections (Design):**
+1. Module architecture and data flow
+2. Data structure definitions (Fortran)
+3. Detailed algorithms with pseudocode
+4. Kernel action implementation (resonant and coupling blocks)
+5. Memory management strategy
+6. Parallelization schemes (MPI/OpenMP/hybrid)
+7. Optimization techniques (FFT, caching, BLAS)
+8. Testing and benchmarking procedures
+9. Implementation checklist
+
+**Memory Improvement:** Similar ~10^7× reduction as resonant-only case (PB-scale → GB-scale)
+
+**Target Audience:** Developers implementing coupling BSE calculations with full band consideration.
+
+---
+
 For questions or contributions, please refer to the main Yambo documentation and support channels at https://www.yambo-code.eu/
