@@ -294,8 +294,10 @@ subroutine K_Haydock_full_bands(iq,W,OBS,Xk,Ken)
    ! Compute H|psi_0> for initial normalization
    call K_multiply_by_V(psi_0,H_psi,-1)
    !
-   ! Compute <psi_0|F|H|psi_0> where F is the metric operator
-   ! For pseudo-Hermitian: v0_mod = <psi_0|Theta|H|psi_0>
+   ! Compute <psi_0|Theta|H|psi_0> where Theta is the metric operator.
+   ! K_dot_product with i_kind=1 applies the Theta metric: factor +1 for resonant,
+   ! -1 for anti-resonant blocks. This is the correct behavior for pseudo-Hermitian.
+   ! See K_dot_product.F:40 for implementation details.
    call K_dot_product(v0_mod_,psi_0,H_psi,1)
    !
    ! For the coupling case
@@ -319,7 +321,8 @@ subroutine K_Haydock_full_bands(iq,W,OBS,Xk,Ken)
      phi_0(i_g)%fragment = psi_0(i_g)%fragment
    enddo
    !
-   ! Compute initial coefficient: Cf(1) = <phi_0|psi_0>
+   ! Compute initial coefficient: Cf(1) = <phi_0|Theta|psi_0>
+   ! K_dot_product with i_kind=1 applies the metric operator correctly.
    if (.not.use_left_and_right) call K_dot_product(v0_mod_,phi_0,psi_0,1)
    if (     use_left_and_right) call K_dot_product(v0_mod_,W0,psi_0,1)
    !
@@ -378,6 +381,7 @@ subroutine K_Haydock_full_bands(iq,W,OBS,Xk,Ken)
    call K_multiply_by_V(psi_n,H_psi,ItParity)
    !
    ! Step 4: Compute B(n+1) = sqrt(<phi_n|Theta|H|psi_n>)
+   ! K_dot_product with i_kind=1 correctly applies the Theta metric operator.
    !
    call K_dot_product(b_squared,psi_n,H_psi,1)
    !
@@ -417,7 +421,8 @@ subroutine K_Haydock_full_bands(iq,W,OBS,Xk,Ken)
      phi_n(i_g)%fragment  = psi_n(i_g)%fragment  ! For pseudo-Hermitian with Theta metric
    enddo
    !
-   ! Step 6: Compute Cf(n+1) = <phi_0|F|psi_n>
+   ! Step 6: Compute Cf(n+1) = <phi_0|Theta|psi_n>
+   ! K_dot_product with i_kind=1 correctly applies the Theta metric operator.
    !
    Cf_size=it+1
    !
