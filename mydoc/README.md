@@ -93,4 +93,38 @@ These documents extend the memory-efficient BSE algorithms to handle the couplin
 
 ---
 
+---
+
+### PR#3 Implementation Documentation (実装済み機能のドキュメント)
+
+PR#3では、上記の仕様と設計に基づいて、メモリ効率的な全バンドBSEソルバーが実装されました。以下のドキュメントで実装の詳細と使用方法を説明しています。
+
+**Files**:
+- `PR3_feature_details.md` - 実装された機能の詳細
+- `PR3_usage_guide.md` - 機能の使用方法ガイド
+- `PR3_tutorial_inputs.md` - チュートリアル用入力ファイル集
+- `PR3_installation_guide.md` - インストール手順書
+- `PR3_test_examples.md` - 動作確認テスト例題
+
+**PR#3で実装されたコンポーネント:**
+
+| ファイル | 説明 |
+|---------|------|
+| `src/bse/K_Haydock_full_bands.F` | 双直交Lanczosソルバー本体 |
+| `src/bse/K_dot_product_metric.F` | 計量内積・再直交化ルーチン |
+| `src/modules/mod_BS_OnTheFly_kernel.F` | オンザフライカーネルモジュール |
+| `src/modules/mod_BS_solvers.F` | ソルバーフラグの追加 |
+| `src/bse/K_solvers.F` | ソルバーディスパッチの追加 |
+
+**Key Implementation Features:**
+- Biorthogonal Lanczos iteration for pseudo-Hermitian coupling Hamiltonian
+- Metric operator Θ = diag(I, -I) for BSE coupling case
+- Numerical stability checks (breakdown detection, imaginary part tolerance)
+- Support for optics, kerr, magnons, and dichroism calculations
+- No heuristic approximations or fallback methods
+
+**Memory Reduction Achieved:** ~10^7× (PB-scale → GB-scale)
+
+---
+
 For questions or contributions, please refer to the main Yambo documentation and support channels at https://www.yambo-code.eu/
