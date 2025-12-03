@@ -76,8 +76,7 @@ subroutine K_Haydock_full_bands(iq,W,OBS,Xk,Ken)
  integer    :: i_ColFG,i_T,i_k_bz
  !
  real(SP)           ::reached_threshold
- real(SP)           ::Bf(Haydock_iterMAX+1)
- complex(SP)        ::Af(Haydock_iterMAX)
+ real(SP)           ::Bf(Haydock_iterMAX+1),Af(Haydock_iterMAX)
  integer            ::ItParity,Cf_size,Haydock_n_converged,Haydock_required_converged
  complex(SP)        ::v0_mod_,b_squared
  character(schlen)  ::dumb_ch
@@ -221,7 +220,7 @@ subroutine K_Haydock_full_bands(iq,W,OBS,Xk,Ken)
      !
    enddo
    !
-   Af= cZERO
+   Af= 0._SP
    Bf= 0._SP
    !
  end if
@@ -339,11 +338,11 @@ subroutine K_Haydock_full_bands(iq,W,OBS,Xk,Ken)
    !
    if (l_BS_ares_from_res) then
      ! A(n) = 0 by symmetry for the coupling case with symmetric R/A
-     Af(it)=cZERO
+     Af(it)=0._SP
      ItParity=(-1)**(it+1)
    else
      call K_dot_product(v0_mod_,H_psi,H_psi,1)
-     Af(it)=v0_mod_
+     Af(it)=real(v0_mod_,SP)
    endif
    !
    ! Step 2: Orthogonalize
@@ -354,7 +353,7 @@ subroutine K_Haydock_full_bands(iq,W,OBS,Xk,Ken)
      do i_g = 1,BS_nT_grps
        if (.not.PAR_IND_T_Haydock%element_1D(i_g)) cycle
        do i_ColFG=1,BS_nkFGbz_in_Tgrp(i_g)
-         call V_plus_alpha_V_omp(BS_T_grp(i_g)%size,-Af(it),psi_n(i_g)%fragment(:,i_ColFG),H_psi(i_g)%fragment(:,i_ColFG))
+         call V_plus_alpha_V_omp(BS_T_grp(i_g)%size,-Af(it)*cONE,psi_n(i_g)%fragment(:,i_ColFG),H_psi(i_g)%fragment(:,i_ColFG))
        enddo 
      enddo
    endif
