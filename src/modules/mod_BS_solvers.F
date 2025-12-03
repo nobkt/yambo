@@ -74,6 +74,7 @@ module BS_solvers
  logical  :: run_inversion=.FALSE.
  logical  :: run_Diago=.FALSE.
  logical  :: run_Slepc=.FALSE.
+ logical  :: run_Haydock_full_bands=.FALSE.
  !
  ! Solvers (Diago)
  !=========

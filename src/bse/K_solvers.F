@@ -13,7 +13,7 @@ subroutine K_solvers(iq,Ken,Xk,q,X_static,W_bss)
  use R_lattice,      ONLY:bz_samp
  use X_m,            ONLY:X_t
  use BS_solvers,     ONLY:BSS_desc,BSS_free,BS_mat,run_Haydock,&
-&                         run_inversion,run_Diago,run_Slepc
+&                         run_inversion,run_Diago,run_Slepc,run_Haydock_full_bands
  use BS,             ONLY:BS_K_has_been_calculated_loaded,&
  &                       BS_blks_free,l_BS_abs,l_BS_kerr,l_BS_magnons,l_BS_dichroism
  use parallel_m,     ONLY:master_cpu,CPU_structure
@@ -103,6 +103,23 @@ subroutine K_solvers(iq,Ken,Xk,q,X_static,W_bss)
    if (l_BS_kerr)    call K_Haydock(iq,W_bss,"kerr",Xk)
    if (l_BS_magnons) call K_Haydock(iq,W_bss,"magnons",Xk)
    if (l_BS_dichroism) call K_Haydock(iq,W_bss,"dichroism",Xk)
+   !
+ endif
+ !
+ ! Memory-efficient full-band Haydock solver for coupling mode
+ ! Uses biorthogonal Lanczos iteration with on-the-fly kernel construction
+ ! Reference: mydoc/bse_full_bands_coupling_specification.md
+ !
+ if (run_Haydock_full_bands) then
+   !
+   ! Remove Inv specific descriptors
+   !
+   if (run_inversion.and.master_cpu) BSS_desc%n=BSS_desc%n-3
+   !
+   if (l_BS_abs)       call K_Haydock_full_bands(iq,W_bss,"optics",Xk,Ken)
+   if (l_BS_kerr)      call K_Haydock_full_bands(iq,W_bss,"kerr",Xk,Ken)
+   if (l_BS_magnons)   call K_Haydock_full_bands(iq,W_bss,"magnons",Xk,Ken)
+   if (l_BS_dichroism) call K_Haydock_full_bands(iq,W_bss,"dichroism",Xk,Ken)
    !
  endif
  !
