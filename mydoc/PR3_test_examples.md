@@ -562,8 +562,8 @@ run_test() {
     echo "Running: $test_name"
     echo "----------------------------------------"
     
-    # 入力ファイル作成（heredocで記載）
-    cat > $input_file
+    # 注意: この関数は入力ファイルを引数として受け取ることを想定しています
+    # 入力ファイルは事前に作成しておく必要があります
     
     # 実行
     if yambo -F $input_file -J ${test_name}_output -o b -y h > /dev/null 2>&1; then

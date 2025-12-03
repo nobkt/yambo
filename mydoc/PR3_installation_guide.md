@@ -59,10 +59,13 @@
 git clone https://github.com/nobkt/yambo.git
 cd yambo
 
-# PR#3のブランチに切り替え（または既にマージ済みの場合はmasterを使用）
-git checkout copilot/optimize-bse-calculation
-# または
-git checkout create-bse-calculation-specification  # PR#3のベースブランチ
+# PR#3の機能を含むブランチに切り替え
+# 注意: PR#3がマージされた後は、masterブランチを使用してください
+git checkout master
+
+# マージ前の場合は、PR#3のheadブランチを使用
+# git fetch origin pull/3/head:pr3-feature
+# git checkout pr3-feature
 ```
 
 ### 3.2 依存ライブラリのインストール
