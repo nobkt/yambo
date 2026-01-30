@@ -170,10 +170,10 @@ $$
 
 **証明**：
 
-$\mathbf{H}^R$がエルミート（$(\mathbf{H}^R)^\dagger = \mathbf{H}^R$）であることを用いると：
+まず、$\mathbf{F}\mathbf{H}$を計算する：
 
 $$
-\mathbf{F} \mathbf{H} \mathbf{F} = \begin{pmatrix}
+\mathbf{F} \mathbf{H} = \begin{pmatrix}
 \mathbf{I} & 0 \\
 0 & -\mathbf{I}
 \end{pmatrix}
@@ -181,15 +181,48 @@ $$
 \mathbf{H}^R & \mathbf{H}^C \\
 -(\mathbf{H}^C)^* & -(\mathbf{H}^R)^*
 \end{pmatrix}
-\begin{pmatrix}
-\mathbf{I} & 0 \\
-0 & -\mathbf{I}
+= \begin{pmatrix}
+\mathbf{H}^R & \mathbf{H}^C \\
+(\mathbf{H}^C)^* & (\mathbf{H}^R)^*
 \end{pmatrix}
 $$
 
+次に、$(\mathbf{F}\mathbf{H})^\dagger$を計算する：
+
 $$
-= \begin{pmatrix}
-\mathbf{H}^R & -\mathbf{H}^C \\
+(\mathbf{F} \mathbf{H})^\dagger = \begin{pmatrix}
+(\mathbf{H}^R)^\dagger & ((\mathbf{H}^C)^*)^\dagger \\
+(\mathbf{H}^C)^\dagger & ((\mathbf{H}^R)^*)^\dagger
+\end{pmatrix}
+$$
+
+$\mathbf{H}^R$がエルミート（$(\mathbf{H}^R)^\dagger = \mathbf{H}^R$）であることを用い、また$((\mathbf{H}^R)^*)^\dagger = (\mathbf{H}^R)^T = \mathbf{H}^R$（エルミート性より$(\mathbf{H}^R)^T = \mathbf{H}^R$は実対称の場合に成立；一般にはエルミートなので$(\mathbf{H}^R)^* = (\mathbf{H}^R)^T$）を用いる。
+
+さらに$((\mathbf{H}^C)^*)^\dagger = (\mathbf{H}^C)^T$、$(\mathbf{H}^C)^\dagger = (\mathbf{H}^C)^*$（これは定義から直接従う）を用いると：
+
+$$
+(\mathbf{F} \mathbf{H})^\dagger = \begin{pmatrix}
+\mathbf{H}^R & (\mathbf{H}^C)^T \\
+(\mathbf{H}^C)^* & (\mathbf{H}^R)^*
+\end{pmatrix}
+$$
+
+$\mathbf{H}^C$が対称（$(\mathbf{H}^C)^T = \mathbf{H}^C$）である条件下で：
+
+$$
+(\mathbf{F} \mathbf{H})^\dagger = \begin{pmatrix}
+\mathbf{H}^R & \mathbf{H}^C \\
+(\mathbf{H}^C)^* & (\mathbf{H}^R)^*
+\end{pmatrix} = \mathbf{F}\mathbf{H}
+$$
+
+すなわち$\mathbf{F}\mathbf{H}$はエルミートである。これはパラエルミート性の定義と等価である。
+
+また、$\mathbf{H}^\dagger \mathbf{F} = \mathbf{F}\mathbf{H}$も確認できる：
+
+$$
+\mathbf{H}^\dagger \mathbf{F} = \begin{pmatrix}
+(\mathbf{H}^R)^\dagger & -(\mathbf{H}^C)^T \\
 (\mathbf{H}^C)^* & -(\mathbf{H}^R)^*
 \end{pmatrix}
 \begin{pmatrix}
@@ -197,25 +230,12 @@ $$
 0 & -\mathbf{I}
 \end{pmatrix}
 = \begin{pmatrix}
-\mathbf{H}^R & \mathbf{H}^C \\
+\mathbf{H}^R & (\mathbf{H}^C)^T \\
 (\mathbf{H}^C)^* & (\mathbf{H}^R)^*
 \end{pmatrix}
 $$
 
-一方：
-
-$$
-\mathbf{H}^\dagger = \begin{pmatrix}
-(\mathbf{H}^R)^\dagger & -((\mathbf{H}^C)^*)^\dagger \\
-(\mathbf{H}^C)^\dagger & -((\mathbf{H}^R)^*)^\dagger
-\end{pmatrix}
-= \begin{pmatrix}
-\mathbf{H}^R & -(\mathbf{H}^C)^T \\
-(\mathbf{H}^C)^\dagger & -\mathbf{H}^R
-\end{pmatrix}
-$$
-
-$\mathbf{H}^C$が対称（$(\mathbf{H}^C)^T = \mathbf{H}^C$）である条件下で、$(\mathbf{H}^C)^\dagger = (\mathbf{H}^C)^*$となり、上記が成立する。$\square$
+$\mathbf{H}^C$が対称のとき、これは$\mathbf{F}\mathbf{H}$と一致する。$\square$
 
 #### 2.5.3 固有値の構造定理
 
